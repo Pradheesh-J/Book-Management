@@ -20,14 +20,29 @@ public class BookService {
         return BookMapper.responseDTOList(books);
     }
 
+    public BookResponseDTO getBook(Integer id) {
+        Book book = bookRepo.findById(id).orElse(new Book());
+        return BookMapper.booktoResponseDTO(book);
+
+    }
+
+    public void addBooks(List<BookRequestDTO> bookRequestDTOS) {
+        List<Book> books = BookMapper.requestToBooks(bookRequestDTOS);
+        bookRepo.saveAll(books);
+    }
+
     public void addBook(BookRequestDTO bookRequestDTO) {
         Book book = BookMapper.requestToBook(bookRequestDTO);
         bookRepo.save(book);
     }
 
-    public BookResponseDTO getBook(Integer id) {
-        Book book = bookRepo.findById(id).orElse(new Book());
-        return BookMapper.booktoResponseDTO(book);
 
+    public void deleteBooks() {
+        bookRepo.deleteAll();
+    }
+
+
+    public void deleteBook(Integer id) {
+        bookRepo.deleteById(id);
     }
 }
