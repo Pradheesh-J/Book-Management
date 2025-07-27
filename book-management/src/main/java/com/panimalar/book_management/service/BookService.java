@@ -60,4 +60,10 @@ public class BookService {
             return new ResponseEntity<>("Book has been updated", HttpStatus.OK);
         }
     }
+
+    public List<BookResponseDTO> getBookByAuthor(String author) {
+
+        List<BookResponseDTO> bookResponseDTOS = BookMapper.responseDTOList(bookRepo.findByAuthor(author));
+        return bookResponseDTOS;
+    }
 }

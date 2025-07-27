@@ -26,6 +26,11 @@ public class BookController {
     public BookResponseDTO getBook(@PathVariable("id") Integer id){
         return bookService.getBook(id);
     }
+////////////Get by Author//////////////////////
+    @GetMapping("/author/{author}")
+    public List<BookResponseDTO> getBookByAuthor(@PathVariable("author") String author){
+        return bookService.getBookByAuthor(author);
+    }
 ///////////////////Add book////////////////////
     @PostMapping("")
     public ResponseEntity<String> addBook(@RequestBody BookRequestDTO bookRequestDTO){
