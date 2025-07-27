@@ -6,9 +6,12 @@ import com.panimalar.book_management.mapper.BookMapper;
 import com.panimalar.book_management.model.Book;
 import com.panimalar.book_management.repository.BookRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -44,5 +47,17 @@ public class BookService {
 
     public void deleteBook(Integer id) {
         bookRepo.deleteById(id);
+    }
+
+    public ResponseEntity<String> updateBook(Integer id, BookRequestDTO bookRequestDTO) {
+        Book book = BookMapper.requestToBook(bookRequestDTO);
+       Optional<Book> book1 =  bookRepo.findById(id);
+        if(book1.isEmpty()){
+            bookRepo.save(book);
+            return new ResponseEntity<>("New book created",HttpStatus.CREATED);
+        } else{
+            bookRepo.save(book);
+            return new ResponseEntity<>("Book has been updated", HttpStatus.OK);
+        }
     }
 }
